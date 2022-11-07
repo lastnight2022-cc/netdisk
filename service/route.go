@@ -208,10 +208,10 @@ var (
 	routeNeedToken = map[string]struct{}{
 		"/file/list":    {},
 		"/file/mkdir":   {},
-		"file/remove":   {},
-		"file/rename":   {},
-		"file/mvcp":     {},
-		"file/download": {},
+		"/file/remove":   {},
+		"/file/rename":   {},
+		"/file/mvcp":     {},
+		"/file/download": {},
 
 		"/upload/check":  {},
 		"/upload/upload": {},
