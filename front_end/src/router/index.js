@@ -1,6 +1,5 @@
 import {createWebHistory,createRouter} from 'vue-router'
 
-
 const routes = [
     {
         path:'/',
@@ -43,7 +42,7 @@ const routes = [
 
 const router = createRouter({
     history:createWebHistory(),
-    routes,
+    routes:routes,
 });
 
 export default router
