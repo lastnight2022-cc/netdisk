@@ -8,21 +8,33 @@
   </a-result>
 </template>
 
+<!--<script lang="ts">-->
+<!--import {defineComponent} from 'vue'-->
+<!--import {useRouter} from 'vue-router'-->
+
+<!--const router = useRouter()-->
+<!--export default defineComponent({-->
+<!--  setup() {-->
+<!--    const router = useRouter()-->
+<!--    const toHome = () => {-->
+<!--      router.push("/");-->
+<!--    }-->
+<!--    return {toHome}-->
+<!--  },-->
+<!--})-->
+
+<!--</script>-->
 <script>
-import {defineComponent} from 'vue'
 import {useRouter} from 'vue-router'
-
 const router = useRouter()
-export default defineComponent({
-  setup() {
-    const router = useRouter()
-    const toHome = () => {
-      router.push("/");
+export default {
+  name:"Exception404",
+  methods:{
+    toHome() {
+      router.push({path:'/'})
     }
-    return {toHome}
-  },
-})
-
+  }
+}
 </script>
 
 <style scoped>

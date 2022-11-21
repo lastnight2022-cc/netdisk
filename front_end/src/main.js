@@ -1,6 +1,6 @@
 import {createApp, nextTick} from 'vue'
 import App from './App.vue'
-import router from "./router";
+import router from "@/router/index.js";
 import Antd from 'ant-design-vue'
 import storage from 'store'
 import 'ant-design-vue/dist/antd.css'

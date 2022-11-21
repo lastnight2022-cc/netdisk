@@ -1,21 +1,21 @@
-import {createWebHistory,createRouter} from 'vue-router'
+import {createWebHistory, createRouter} from 'vue-router'
 
 const routes = [
     {
-        path:'/',
-        redirect:'/filecloud',
+        path: '/',
+        redirect: '/filecloud',
     },
     {
-        name:'filecloud',
+        name: 'filecloud',
         path: '/filecloud',
-        meta:{title:'个人云盘'},
-        component:() => import('@/views/Filecloud')
+        meta: {title: '个人云盘'},
+        component: () => import('@/views/Filecloud')
     },
     {
-        name:"login",
-        path:'/filecloud/login',
+        name: "login",
+        path: '/filecloud/login',
         meta: {title: '个人云盘登录'},
-        component: ()=> import('@/views/Login')
+        component: () => import('@/views/Login')
     },
     {
         name: 'fileshared',
@@ -30,7 +30,8 @@ const routes = [
         component: () => import('@/views/SharedList')
     },
     {
-        path: '*',
+        // path: '*',// 不识别的path自动匹配404
+        path:"/:catchAll(.*)",
         redirect: '/404',
     },
     {
@@ -41,8 +42,8 @@ const routes = [
 ]
 
 const router = createRouter({
-    history:createWebHistory(),
-    routes:routes,
+    history: createWebHistory(),
+    routes: routes,
 });
 
 export default router
