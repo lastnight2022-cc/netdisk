@@ -1,41 +1,43 @@
-import {createApp, nextTick} from 'vue'
+import Vue from 'vue'
 import App from './App.vue'
-import router from "@/router/index.js";
-import Antd from 'ant-design-vue'
-import storage from 'store'
-import 'ant-design-vue/dist/antd.css'
-import VueClipboard from "vue-clipboard2";
+import Antd from 'ant-design-vue';
+import router from './router'
+import  storage from 'store'
+import 'ant-design-vue/dist/antd.css';
 
-const app = createApp(App)
-app.use(router)
-app.use(storage)
-app.use(Antd)
-app.use(VueClipboard)
+Vue.config.productionTip = false
+Vue.use(Antd);
 
+
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
+
+// http://momentjs.cn/docs/#/use-it/
 import moment from 'moment'
-
 moment.locale('zh-cn')
 
-const allowList = ['login', 'fileshared']
+const allowList = ['login','fileshared'] // no redirect allowList
 const loginRoutePath = '/filecloud/login'
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.title) {
-        document.title = to.meta.title
-    }
-    const token = storage.get('Access-Token')
-    if (token) {
-        next()
+  if (to.meta.title){
+    document.title = to.meta.title
+  }
+
+  const token = storage.get("Access-Token")
+  if (token) {
+    next()
+  } else {
+    if (allowList.includes(to.name)) {
+      // 在免登录名单，直接进入
+      next()
     } else {
-        if (allowList.includes(to.name)) {
-            // 在免登录名单，直接进入
-            next()
-        } else {
-            next({path: loginRoutePath, query: {redirect: to.fullPath}})
-        }
+      next({ path: loginRoutePath, query: { redirect: to.fullPath } })
     }
+  }
 })
 
-app.use(router)
-
-app.mount('#app')
+new Vue({
+  router,
+  render: h => h(App)
+}).$mount('#app')

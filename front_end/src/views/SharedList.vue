@@ -3,9 +3,9 @@
     <div id="header">
       <template v-if="this.selectedRowKeys.length === 0">个人云盘分享链接</template>
       <template v-else-if="this.selectedRowKeys.length === 1">
-        <a-button type="primary" shape="round" icon="paper-clip"
-                  v-clipboard:copy="sharedCopyText"
-                  v-clipboard:success="handleCopyOk"
+        <a-button type="primary" shape="round" icon="paper-clip" 
+          v-clipboard:copy="sharedCopyText" 
+          v-clipboard:success="handleCopyOk"
         >复制链接</a-button>
         &nbsp;
         <a-button type="primary" shape="round" icon="stop" @click="handleCancel">取消分享</a-button>
@@ -17,29 +17,29 @@
 
     <div class="path">全部文件</div>
 
-    <a-table
-        :columns="columns"
-        :data-source="tableData"
-        :pagination="false"
-        :rowKey="(record) => record.key"
-        :row-selection="{selectedRowKeys:selectedRowKeys,onChange:onSelectChange}"
-        :customRow="customRowFunc"
+    <a-table 
+    :columns="columns" 
+    :data-source="tableData"
+    :pagination="false"
+    :rowKey="(record) => record.key"
+    :row-selection="{selectedRowKeys:selectedRowKeys,onChange:onSelectChange}"
+    :customRow="customRowFunc"
     >
       <template slot="name" slot-scope="text, record">
         <a-icon type="appstore"/>&nbsp;&nbsp;{{showName(record)}}
       </template>
       <template slot="status" slot-scope="text, record">
-        <span v-if="record.key !== hoverKey">{{showDeadline(record)}}后过期</span>
+        <span v-if="record.key !== hoverKey">{{showDeadline(record)}}后过期</span> 
         <div v-else>
-          <a
-              v-clipboard:copy="hoverCopyText"
-              v-clipboard:success="handleCopyOk"
+          <a 
+            v-clipboard:copy="hoverCopyText" 
+            v-clipboard:success="handleCopyOk"
           ><a-icon type="paper-clip" />&nbsp;复制链接</a>&nbsp;&nbsp;&nbsp;
           <a @click="handleCancelKey"><a-icon type="stop" />&nbsp;取消分享</a>
-        </div>
+        </div> 
       </template>
       <template slot="looked" slot-scope="text, record">
-        <span v-if="record.key !== hoverKey">{{text}}</span>
+        <span v-if="record.key !== hoverKey">{{text}}</span> 
       </template>
     </a-table>
   </div>
@@ -148,13 +148,13 @@ export default {
       }
 
       sharedCancel({keys:this.selectedRowKeys})
-          .then(()=>{
-            this.$message.success(`分享已取消`);
-            this.getList()
-          })
+      .then(()=>{
+        this.$message.success(`分享已取消`);
+        this.getList()
+      })
     },
     handleCopyOk(){
-      this.$message.success(`复制链接成功`);
+      this.$message.success(`复制链接成功`);        
     },
     handleCancelKey(){
       if (this.hoverKey === ''){
@@ -162,10 +162,10 @@ export default {
       }
 
       sharedCancel({keys:[this.hoverKey]})
-          .then(()=>{
-            this.$message.success(`分享已取消`);
-            this.getList()
-          })
+      .then(()=>{
+        this.$message.success(`分享已取消`);
+        this.getList()
+      })
     }
   }
 }
@@ -187,12 +187,12 @@ export default {
 
 /* 滚动条宽度 */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 10px;
+ width: 7px;
+ height: 10px;
 }
 /* 滚动条的滑块 */
 ::-webkit-scrollbar-thumb {
-  background-color: #a1a3a9;
-  border-radius: 3px;
+ background-color: #a1a3a9;
+ border-radius: 3px;
 }
 </style>

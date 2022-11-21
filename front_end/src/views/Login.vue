@@ -26,8 +26,6 @@
 <script>
 import  storage from 'store'
 import { login } from '@/api/api'
-import {useRouter} from 'vue-router'
-const router = useRouter()
 
 export default {
   data(){
@@ -63,7 +61,7 @@ export default {
             storage.set("Access-Token", ret.token, 8 * 60 * 60 * 1000)
             setTimeout(() => {
               this.loadingLogin = false
-              router.push({ path: this.redirect })
+              this.$router.push({ path: this.redirect })
             }, 500)
           }).catch(() => {
             this.loadingLogin = false

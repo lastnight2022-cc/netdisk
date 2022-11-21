@@ -2,68 +2,68 @@
   <div class="body">
     <div v-if="!sharedChecked"></div>
     <div v-else>
-      <div id="header">
-        <div id="header-title">
-          <template v-if="!showDownload()">
-            <a-icon type="appstore" theme="twoTone" style="font-size:20px;"/> &nbsp; <span style="font-size:20px;">{{this.sharedInfo.name}}</span>
-          </template>
-          <template v-else>
-            <a-button type="primary" icon="download" shape="round" @click="handleDownload">下载</a-button>
-          </template>
-        </div>
-        <div id="header-time">
-          <a-icon type="clock-circle" /> <span>{{showCreateTime()}}</span> &nbsp;&nbsp; <span>过期时间：{{showDeadline()}}后</span>
-        </div>
-      </div>
-
-      <div class="path">
-        <template v-if="navs.length === 1">
-          全部文件
+    <div id="header">
+      <div id="header-title">
+        <template v-if="!showDownload()">
+          <a-icon type="appstore" theme="twoTone" style="font-size:20px;"/> &nbsp; <span style="font-size:20px;">{{this.sharedInfo.name}}</span>
         </template>
         <template v-else>
-          <a href="javascript:;" @click="goback()">返回上一级</a>
-          <a-divider type="vertical" />
-          <a href="javascript:;" @click="goto(0)">全部文件</a>
-          <template v-for="(v,i) of navs">
-            <template v-if="i !== 0">
-              <template v-if="i === navs.length-1">
-                &nbsp;>&nbsp; {{v}}
-              </template>
-              <template v-else>
-                &nbsp;>&nbsp; <a href="javascript:;" @click="goto(i)" :key=i>{{v}}</a>
-              </template>
+          <a-button type="primary" icon="download" shape="round" @click="handleDownload">下载</a-button>
+        </template> 
+      </div>
+      <div id="header-time">
+        <a-icon type="clock-circle" /> <span>{{showCreateTime()}}</span> &nbsp;&nbsp; <span>过期时间：{{showDeadline()}}后</span> 
+      </div>
+    </div>
+
+    <div class="path">
+      <template v-if="navs.length === 1">
+        全部文件
+      </template>
+      <template v-else>
+        <a href="javascript:;" @click="goback()">返回上一级</a>
+        <a-divider type="vertical" />
+        <a href="javascript:;" @click="goto(0)">全部文件</a>
+        <template v-for="(v,i) of navs">
+          <template v-if="i !== 0">
+            <template v-if="i === navs.length-1">
+              &nbsp;>&nbsp; {{v}}
+            </template>
+            <template v-else>
+              &nbsp;>&nbsp; <a href="javascript:;" @click="goto(i)" :key=i>{{v}}</a>
             </template>
           </template>
         </template>
-      </div>
+      </template>
+    </div>
 
-      <a-table
-          :columns="columns"
-          :data-source="tableData"
-          :pagination="false"
-          :rowKey="(record,index) => index"
-          :row-selection="{selectedRowKeys:selectedRowKeys,onChange:onSelectChange}"
-          :customRow="customRowFunc"
-      >
-        <template slot="name" slot-scope="text, record">
-          <a-icon type="folder" v-if="record.isDir"/>
-          <a-icon type="file" v-else/>
-          &nbsp;&nbsp;
+    <a-table 
+    :columns="columns" 
+    :data-source="tableData"
+    :pagination="false"
+    :rowKey="(record,index) => index"
+    :row-selection="{selectedRowKeys:selectedRowKeys,onChange:onSelectChange}"
+    :customRow="customRowFunc"
+    >
+      <template slot="name" slot-scope="text, record">
+        <a-icon type="folder" v-if="record.isDir"/>
+        <a-icon type="file" v-else/>
+        &nbsp;&nbsp;
           <a v-if="record.isDir" href="javascript:;" @click="gonext(text)">{{text}}</a>
           <span v-else>{{text}}</span>
-        </template>
-      </a-table>
+      </template>
+    </a-table>
     </div>
 
     <!-- token -->
-    <a-modal
-        v-model="sharedModalToken"
-        width="500px"
-        centered
-        :maskStyle="{opacity:1,background:'#FCFCFC'}"
-        :maskClosable="false"
-        :closable="false"
-        footer=""
+    <a-modal 
+    v-model="sharedModalToken" 
+    width="500px"
+    centered
+    :maskStyle="{opacity:1,background:'#FCFCFC'}"
+    :maskClosable="false"
+    :closable="false"
+    footer=""
     >
       <div style="height:240px">
         <div style="height:50px;line-height:36px;text-align:center;border-bottom: 2px solid #F0F0F0;">
@@ -82,9 +82,9 @@
 
 <script>
 import {
-  sharedInfo,
-  sharedPath,
-  sharedDownload,
+sharedInfo,
+sharedPath,
+sharedDownload,
 } from "@/api/api"
 import moment from 'moment'
 import  storage from 'store'
@@ -119,20 +119,20 @@ export default {
     //console.log(this.$route);
     this.sharedKey = this.$route.params.key
     this.sharedToken = storage.get(this.sharedKey)
-
+    
     if (this.sharedToken){
       const args = {key:this.sharedKey,sharedToken:this.sharedToken}
       sharedInfo(args)
-          .then((ret) => {
-            this.sharedInfo = ret
-            this.tableData = ret.items
-            this.navs.push(ret.root)
-            this.sharedChecked = true
-          })
-          .catch(()=>{
-            storage.remove(this.sharedKey)
-            this.sharedModalToken = true
-          })
+      .then((ret) => {
+        this.sharedInfo = ret
+        this.tableData = ret.items
+        this.navs.push(ret.root)
+        this.sharedChecked = true
+      })
+      .catch(()=>{
+        storage.remove(this.sharedKey)
+        this.sharedModalToken = true
+      })
     }else{
       this.sharedModalToken = true
     }
@@ -166,7 +166,7 @@ export default {
               this.selectedNames.splice(selectedIdx,1)
             }
             //console.log(selectedIdx ,this.selectedRowKeys );
-
+            
           },       // 点击行
           dblclick: () => {},
           contextmenu: () => {},
@@ -190,7 +190,7 @@ export default {
           }
           return -1
         })
-        //console.log(res);
+       //console.log(res);
       })
     },
     goback(){
@@ -225,20 +225,20 @@ export default {
     handleSharedInfo(){
       const args = {key:this.sharedKey,sharedToken:this.sharedModalValue}
       sharedInfo(args)
-          .then((ret) => {
-            //console.log(ret);
-            this.sharedModalToken = false
-            this.sharedToken = args.sharedToken
-            storage.set(this.sharedKey,this.sharedToken,12 * 60 *60 * 1000)
-            this.sharedInfo = ret
-            this.tableData = ret.items
-            this.navs.push(ret.root)
-            this.sharedChecked = true
-          })
-          .catch((err)=>{
-            this.sharedTokenCheckFailed = true
-            this.sharedTokenCheckText = err.data.message
-          })
+      .then((ret) => {
+        //console.log(ret);
+        this.sharedModalToken = false
+        this.sharedToken = args.sharedToken
+        storage.set(this.sharedKey,this.sharedToken,12 * 60 *60 * 1000)
+        this.sharedInfo = ret
+        this.tableData = ret.items
+        this.navs.push(ret.root)
+        this.sharedChecked = true
+      })
+      .catch((err)=>{
+        this.sharedTokenCheckFailed = true
+        this.sharedTokenCheckText = err.data.message
+      })
     },
     showDownload(){
       if (this.selectedRowKeys.length > 0){
@@ -267,7 +267,7 @@ export default {
             document.body.appendChild(downloadElement);
             downloadElement.click();
             document.body.removeChild(downloadElement);
-            window.URL.revokeObjectURL(href);
+            window.URL.revokeObjectURL(href); 
           })
         }
       }
@@ -296,12 +296,12 @@ export default {
 
 /* 滚动条宽度 */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 10px;
+ width: 7px;
+ height: 10px;
 }
 /* 滚动条的滑块 */
 ::-webkit-scrollbar-thumb {
-  background-color: #a1a3a9;
-  border-radius: 3px;
+ background-color: #a1a3a9;
+ border-radius: 3px;
 }
 </style>
